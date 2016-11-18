@@ -7,11 +7,14 @@ using CoreTweet.Streaming;
 using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
+using CoreTweet;
+
+
 
 namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
-      {
+    {
         private Button button1;
         private ComboBox comboBox1;
         private Label label1;
@@ -21,8 +24,8 @@ namespace WindowsFormsApplication1
         string s3;
 
 
-         public Form1()
-         {
+        public Form1()
+        {
             InitializeComponent();
 
             var programs = new[] { "Lv50 ティアマト・マグナ", "Lv70 コロッサス・マグナ", "Lv60 リヴァイアサン・マグナ", "Lv60 ユグドラシル・マグナ", "Lv75 シュバリエ・マグナ", "Lv75 セレスト・マグナ" };
@@ -35,9 +38,9 @@ namespace WindowsFormsApplication1
               , "3167038009-tVOk9rSAdYIrdUbcp7LW29Rsidr44UttspFYDFZ"
                , "Xy6yeEU6seLDBvx8UgoEemBXsSY5vZD0kV1WdAFpqtSZl");
 
-          
 
-           int index = comboBox1.SelectedIndex;
+
+            int index = comboBox1.SelectedIndex;
             string Text = comboBox1.Items[index].ToString();
 
             var result = tokens.Search.TweetsAsync(count => 100, q => Text);
@@ -51,8 +54,9 @@ namespace WindowsFormsApplication1
 
 
         private void InitializeComponent()
-    {
+        {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -96,6 +100,9 @@ namespace WindowsFormsApplication1
             // 
             // notifyIcon1
             // 
+            this.notifyIcon1.BalloonTipText = "a";
+            this.notifyIcon1.BalloonTipTitle = "a";
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "notifyIcon1";
             this.notifyIcon1.Visible = true;
             // 
@@ -115,7 +122,9 @@ namespace WindowsFormsApplication1
 
         public async void button1_Click(object sender, EventArgs e)
         {
-           
+            notifyIcon1.BalloonTipTitle = "guraburugo";
+            notifyIcon1.BalloonTipText = "監視を開始しました";
+            notifyIcon1.ShowBalloonTip(3000);
 
             //Task.Run(
 
@@ -123,7 +132,7 @@ namespace WindowsFormsApplication1
                 , "SoOOnaoylZnjLJu8n4ygMyENW2RQ5QFq1IjdfuUp5A9blr9oKK"
               , "3167038009-tVOk9rSAdYIrdUbcp7LW29Rsidr44UttspFYDFZ"
                , "Xy6yeEU6seLDBvx8UgoEemBXsSY5vZD0kV1WdAFpqtSZl");
-            for (int g=0; g <= 10000; g++)
+            for (int g = 0; g <= 10000; g++)
             {
                 Thread.Sleep(3000);
                 string ret = await AsyncTask();
@@ -156,6 +165,18 @@ namespace WindowsFormsApplication1
                   //}
                   */
 
+                /*
+                                var stream = tokens.Streaming.UserAsObservable().Publish();
+
+                                stream.OfType<StatusMessage>()
+                                    .Subscribe(x => Console.WriteLine("{0}: {1}", x.Status.User.ScreenName, x.Status.Text));
+
+                                var disposable = stream.Connect();
+
+                                await Task.Delay(30 * 1000);
+                                disposable.Dispose();*/
+
+
                 label1.Text = s3;
 
 
@@ -178,16 +199,16 @@ namespace WindowsFormsApplication1
 
             string Text = comboBox1.Items[index].ToString();
 
-            Func<string> asyncJob =()=>
+            Func<string> asyncJob = () =>
             {
-                
 
-           foreach (var m in tokens.Streaming.Filter(track => Text)
-                    .OfType<StatusMessage>()
-                    .Select(x => x.Status)
-                    .Take(1))
-                    {
-                   
+
+                foreach (var m in tokens.Streaming.Filter(track => Text)
+                         .OfType<StatusMessage>()
+                         .Select(x => x.Status)
+                         .Take(1))
+                {
+
                     s3 = m.Text;
 
                 }
@@ -205,22 +226,22 @@ namespace WindowsFormsApplication1
         }
 
     }
-    
-    
-  
-   // class Program
-  //  {
-   //     public static void Main(string[] args)
-   //     {
-   //         var tokens = CoreTweet.Tokens.Create("ewtg8suISRPzfZyxWEKwTDoQf"
-   //             , "SoOOnaoylZnjLJu8n4ygMyENW2RQ5QFq1IjdfuUp5A9blr9oKK"
-     //           , " 3167038009-tVOk9rSAdYIrdUbcp7LW29Rsidr44UttspFYDFZ"
+
+
+
+    // class Program
+    //  {
+    //     public static void Main(string[] args)
+    //     {
+    //         var tokens = CoreTweet.Tokens.Create("ewtg8suISRPzfZyxWEKwTDoQf"
+    //             , "SoOOnaoylZnjLJu8n4ygMyENW2RQ5QFq1IjdfuUp5A9blr9oKK"
+    //           , " 3167038009-tVOk9rSAdYIrdUbcp7LW29Rsidr44UttspFYDFZ"
     //            , "Xy6yeEU6seLDBvx8UgoEemBXsSY5vZD0kV1WdAFpqtSZl");
 
     //        var text = "status text";
     //        tokens.Statuses.Update(new { status = text });
     //    }
-   // }
+    // }
 
 
 }
