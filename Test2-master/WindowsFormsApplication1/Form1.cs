@@ -181,7 +181,12 @@ namespace WindowsFormsApplication1
 
 
 
-                Clipboard.SetDataObject(s3.Substring(11, 8));
+                //通常の文章で58文字
+                int len = s3.Length;
+
+                Clipboard.SetDataObject(s3.Substring(len-47, 8));
+                
+
                 //test
                 notifyIcon1.BalloonTipTitle = "guraburugo";
                 notifyIcon1.BalloonTipText = s3;
@@ -201,7 +206,7 @@ namespace WindowsFormsApplication1
 
             Func<string> asyncJob = () =>
             {
-
+               
 
                 foreach (var m in tokens.Streaming.Filter(track => Text)
                          .OfType<StatusMessage>()
@@ -212,6 +217,7 @@ namespace WindowsFormsApplication1
                     s3 = m.Text;
 
                 }
+               
 
                 // 時間のかかる処理事
                 /*  var m = tokens.Streaming.Filter(track => Text)
