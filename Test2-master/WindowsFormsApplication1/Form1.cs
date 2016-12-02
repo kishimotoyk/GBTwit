@@ -136,7 +136,7 @@ namespace WindowsFormsApplication1
                , "Xy6yeEU6seLDBvx8UgoEemBXsSY5vZD0kV1WdAFpqtSZl");
             for (int g = 0; g <= 10000; g++)
             {
-                Thread.Sleep(3000);
+              
                 string ret = await AsyncTask();
                 /*  int index = comboBox1.SelectedIndex;
 
@@ -197,8 +197,6 @@ namespace WindowsFormsApplication1
             }
                 else if (count == 1){
                     count--;
-                    
-
                 }
             
         }
@@ -215,8 +213,8 @@ namespace WindowsFormsApplication1
 
             Func<string> asyncJob = () =>
             {
-               
 
+                Thread.Sleep(5000);
                 foreach (var m in tokens.Streaming.Filter(track => Text)
                          .OfType<StatusMessage>()
                          .Select(x => x.Status)
