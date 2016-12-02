@@ -22,7 +22,7 @@ namespace WindowsFormsApplication1
         private NotifyIcon notifyIcon1;
         private System.ComponentModel.IContainer components;
         string s3;
-
+        int count = 0;
 
         public Form1()
         {
@@ -122,6 +122,8 @@ namespace WindowsFormsApplication1
 
         public async void button1_Click(object sender, EventArgs e)
         {
+            if (count == 0) {
+                count++;
             notifyIcon1.BalloonTipTitle = "guraburugo";
             notifyIcon1.BalloonTipText = "監視を開始しました";
             notifyIcon1.ShowBalloonTip(3000);
@@ -184,14 +186,21 @@ namespace WindowsFormsApplication1
                 //通常の文章で58文字
                 int len = s3.Length;
 
-                Clipboard.SetDataObject(s3.Substring(len-47, 8));
-                
+                Clipboard.SetDataObject(s3.Substring(len - 47, 8));
+
 
                 //test
                 notifyIcon1.BalloonTipTitle = "guraburugo";
                 notifyIcon1.BalloonTipText = s3;
                 notifyIcon1.ShowBalloonTip(3000);
             }
+            }
+                else if (count == 1){
+                    count--;
+                    
+
+                }
+            
         }
         public async Task<string> AsyncTask()
         {
