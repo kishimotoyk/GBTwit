@@ -9,7 +9,7 @@ using System.IO;
 using System.Diagnostics;
 using CoreTweet;
 
-
+//http://dobon.net/vb/dotnet/programing/displayprogress.html#threadcancel ここを試してみる
 
 namespace WindowsFormsApplication1
 {
@@ -47,6 +47,7 @@ namespace WindowsFormsApplication1
 
             // tokens.Statuses.Update(new { status = text1 });
 
+          
 
             //InitializeComponent();
         }
@@ -127,9 +128,9 @@ namespace WindowsFormsApplication1
             notifyIcon1.BalloonTipTitle = "guraburugo";
             notifyIcon1.BalloonTipText = "監視を開始しました";
             notifyIcon1.ShowBalloonTip(3000);
-
+            button1.Text = "中止";
             //Task.Run(
-
+               
             CoreTweet.Tokens tokens = CoreTweet.Tokens.Create("ewtg8suISRPzfZyxWEKwTDoQf"
                 , "SoOOnaoylZnjLJu8n4ygMyENW2RQ5QFq1IjdfuUp5A9blr9oKK"
               , "3167038009-tVOk9rSAdYIrdUbcp7LW29Rsidr44UttspFYDFZ"
@@ -187,7 +188,7 @@ namespace WindowsFormsApplication1
                 int len = s3.Length;
 
                 Clipboard.SetDataObject(s3.Substring(len - 47, 8));
-
+                
 
                 //test
                 notifyIcon1.BalloonTipTitle = "guraburugo";
@@ -195,9 +196,11 @@ namespace WindowsFormsApplication1
                 notifyIcon1.ShowBalloonTip(3000);
             }
             }
-                else if (count == 1){
-                    count--;
-                }
+            else if (count == 1)
+            {
+                
+            }
+                
             
         }
         public async Task<string> AsyncTask()
@@ -206,14 +209,14 @@ namespace WindowsFormsApplication1
                     , "SoOOnaoylZnjLJu8n4ygMyENW2RQ5QFq1IjdfuUp5A9blr9oKK"
                   , "3167038009-tVOk9rSAdYIrdUbcp7LW29Rsidr44UttspFYDFZ"
                    , "Xy6yeEU6seLDBvx8UgoEemBXsSY5vZD0kV1WdAFpqtSZl");
-
+            
             int index = comboBox1.SelectedIndex;
 
             string Text = comboBox1.Items[index].ToString();
 
             Func<string> asyncJob = () =>
             {
-
+              
                 Thread.Sleep(5000);
                 foreach (var m in tokens.Streaming.Filter(track => Text)
                          .OfType<StatusMessage>()
@@ -234,6 +237,8 @@ namespace WindowsFormsApplication1
 
                 return s3;
             };
+            
+            
             string ret = await Task.Run(asyncJob);
             return ret;
         }
